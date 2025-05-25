@@ -75,3 +75,39 @@ def value_counts_plot(df, column):
     df[column].value_counts().plot(kind='bar')
     plt.title(f'Distribution of {column}')
     plt.show()
+
+
+
+def clean_dataset(df, missing_thresh=0.7, verbose=True):
+    """
+    تنظيف شامل للبيانات: حذف أعمدة ناقصة بشدة، معالجة القيم المفقودة، حذف الأعمدة غير المفيدة.
+    """
+    clean_df = df.copy()
+
+    # حذف الأعمدة ذات نسبة مفقودات عالية
+    null_ratios = df.isnull().mean()
+    cols_to_drop = null_ratios[null_ratios > missing_thresh].index
+    df.drop(columns=cols_to_drop, inplace=True)
+    
+    # حذف الصفوف المكررة
+    df.drop_duplicates(inplace=True)
+    
+    # حذف الأعمدة الثابتة (قيمها وحدة فقط)
+    constant_cols = [col for col in df.columns if df[col].nunique() <= 1]
+    df.drop(columns=constant_cols, inplace=True)
+
+    # ملء القيم المفقودة
+    for col in df.columns:
+        if df[col].dtype in ['float64', 'int64']:
+            df[col].fillna(df[col].median(), inplace=True)
+        else:
+            df[col].fillna(df[col].mode().iloc[0], inplace=True)
+
+    if verbose:
+        print(f"✅ Cleaning Summary:")
+        print(f"• Dropped columns: {list(cols_to_drop)}")
+        print(f"• Dropped constant columns: {constant_cols}")
+        print(f"• Final shape: {df.shape}")
+    
+    return clean_df
+
