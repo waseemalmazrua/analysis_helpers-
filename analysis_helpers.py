@@ -13,6 +13,32 @@ def plot_histogram(df, column):
     plt.title(f'Distribution of {column}')
     plt.show()
 
+# 1
+def plot_quantitative_distributions(df, category_col=None, bins=20):
+    """
+    ترسم histogram + kde لكل الأعمدة الرقمية في DataFrame.
+    
+    Parameters:
+    - df: DataFrame يحتوي على البيانات.
+    - category_col: اسم العمود الفئوي للتقسيم (مثل النوع، الفئة). إذا None، يرسم بدون تقسيم.
+    - bins: عدد الفواصل في الهستوغرام (افتراضي 20).
+    """
+    quantitative_cols = df.select_dtypes(include=['int64', 'float64']).columns
+    
+    for col in quantitative_cols:
+        plt.figure(figsize=(6, 4))
+        if category_col:
+            sns.histplot(data=df, x=col, hue=category_col, kde=True, bins=bins, palette='Set2')
+            plt.title(f"{col} distribution by {category_col}")
+        else:
+            sns.histplot(data=df, x=col, kde=True, bins=bins, color='steelblue')
+            plt.title(f"{col} distribution")
+        
+        plt.xlabel(col)
+        plt.ylabel("Count")
+        plt.tight_layout()
+        plt.show()
+
 #  2. Scatter Plot Function
 def plot_scatter(df, x, y):
     """ Creates a scatter plot to analyze the relationship between two numeric variables. """
