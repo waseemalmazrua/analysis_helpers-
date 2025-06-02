@@ -48,6 +48,15 @@ def check_normality(series, alpha=0.05):
 def encode_categorical_columns(df):
     df_encoded = pd.get_dummies(df, drop_first=True)
     return df_encoded
+====================================================
+# اكثر من عامود تختار
+def encode_categorical_columns(df, columns_to_encode): # df, ['country', 'city'])
+    df_encoded = df.copy()
+    dummies = pd.get_dummies(df_encoded[columns_to_encode], drop_first=True)
+    df_encoded.drop(columns=columns_to_encode, inplace=True)
+    df_encoded = pd.concat([df_encoded, dummies], axis=1)
+    return df_encoded
+==========================================================
 
 # 8. رسم Heatmap للارتباط
 def visualize_correlation(df):
