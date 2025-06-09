@@ -9,7 +9,8 @@ from statsmodels.tools.tools import add_constant
 # 1. تعبئة القيم المفقودة بالـ mode
 def fill_missing_by_mode(df, column):
     mode = df[column].mode()[0]
-    df[column].fillna(mode, inplace=True)
+    df[column] = df[column].fillna(mode)
+
 
 # 2. تعبئة القيم المفقودة حسب التوزيع الأصلي
 def fill_missing_by_distribution(df, column):
