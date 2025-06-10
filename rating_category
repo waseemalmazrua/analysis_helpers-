@@ -1,0 +1,114 @@
+def classify_values(value):
+    if value >= 4.5:                   # example
+        return "Excellent"            # df["Rating_Category"] = df["AnyNumericColumn"].apply(classify_values)
+    elif value >= 4.0:
+        return "Very Good"
+    elif value >= 3.0:
+        return "Good"
+    elif value >= 2.0:
+        return "Fair"
+    elif value > 0:
+        return "Poor"
+    else:
+        return "Not Rated"
+===========================================================
+
+def classify_column(df, column_name, new_col="Category"):
+    def label(val):
+        if val >= 4.5:                            # USE example
+            return "Excellent"                      df = classify_column(df, "Satisfaction_Score", "Satisfaction_Level")
+        elif val >= 4.0:
+            return "Very Good"
+        elif val >= 3.0:
+            return "Good"
+        elif val >= 2.0:
+            return "Fair"
+        elif val > 0:
+            return "Poor"
+        else:
+            return "Not Rated"
+    
+    df[new_col] = df[column_name].apply(label)
+    return df
+================================================================
+
+
+def rating_category_verbose(stars):
+    if stars >= 4.5:
+        return "🔥 Must-Try (Top Rated)"
+    elif stars >= 4.0:
+        return "🌟 Highly Recommended"
+    elif stars >= 3.0:
+        return "👍 Worth a Try"
+    elif stars >= 2.0:
+        return "⚠️ Below Average"
+    elif stars > 0:
+        return "👎 Not Recommended"
+    else:
+        return "❓ Not Rated"
+
+
+  df[new_col] = df[column_name].apply(label)
+    return df
+=============================================
+def rating_dashboard_label(stars):
+    if stars >= 4.0:
+        return "🟢 Excellent"
+    elif stars >= 3.0:
+        return "🔵 Good"
+    elif stars >= 2.0:
+        return "🟠 Average"
+    elif stars > 0:
+        return "🔴 Poor"
+    else:
+        return "⚪ Not Rated"
+
+
+  df[new_col] = df[column_name].apply(label)
+    return df
+=======================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def rating_category_text_only(column):
+    if stars >= 4.5:
+        return "Outstanding"
+    elif stars >= 4.0:
+        return "Excellent"
+    elif stars >= 3.0:
+        return "Good"
+    elif stars >= 2.0:
+        return "Fair"
+    elif stars > 0:
+        return "Poor"
+    else:
+        return "No Rating"
+=============================================
