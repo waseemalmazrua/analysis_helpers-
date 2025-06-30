@@ -1,0 +1,26 @@
+
+def analyze_categoricals(df, threshold_onehot=5, min_count_safety=10):
+    cat_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
+    print(f"\nFound categorical columns: {cat_columns}\n")
+    
+    for col in cat_columns:
+        unique_vals = df[col].nunique()
+        counts = df[col].value_counts()
+        min_count = counts.min()
+        avg_count = counts.mean()
+        
+        print(f"=== {col} ===")
+        print(f"• Unique categories: {unique_vals}")
+        print(f"• Min count: {min_count}")
+        print(f"• Avg count: {avg_count:.1f}")
+        
+        if unique_vals <= threshold_onehot:
+            print(f"✅ Recommend: Use OneHot Encoding (few categories)")
+        elif min_count < min_count_safety:
+            print(f"⚠️ Recommend: Use OneHot with Grouping OR careful Target Encoding with smoothing / KFold")
+        else:
+            print(f"✅ Recommend: Safe for Target Encoding")
+        print("")
+
+
+analyze_categoricals(df)
